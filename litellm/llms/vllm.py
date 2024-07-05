@@ -30,7 +30,7 @@ def validate_environment(model: str):
         if llm is None:
             llm = LLM(
                 model=model,
-                tensor_parallel_size=os.environ.get("TENSOR_PARALLEL_SIZE", 1)
+                tensor_parallel_size=int(os.environ.get("TENSOR_PARALLEL_SIZE", 1))
             )
         return llm, SamplingParams
     except Exception as e:
