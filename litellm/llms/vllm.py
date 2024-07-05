@@ -28,7 +28,10 @@ def validate_environment(model: str):
         from vllm import LLM, SamplingParams  # type: ignore
 
         if llm is None:
-            llm = LLM(model=model)
+            llm = LLM(
+                model=model,
+                tensor_parallel_size=os.environ.get("TENSOR_PARALLEL_SIZE", 1)
+            )
         return llm, SamplingParams
     except Exception as e:
         raise VLLMError(status_code=0, message=str(e))
